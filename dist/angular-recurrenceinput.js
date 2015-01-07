@@ -1196,10 +1196,10 @@ locale[defaultLocale] = {
 			***********************************/
 			//move any i18n settings from riLocale to LABELS, overwriting the default ones
 			if ($scope.riLocale) {
-				for (var localeName in $scope.riLocale) 
+				for (var localeName in $scope.riLocale)
 					tool.localize(localeName, $scope.riLocale[localeName]);
 			}
-						
+
 			var conf = angular.extend({}, tool.conf);
 			angular.extend(conf, $scope.riConfig);
 			angular.extend(conf, { i18n: LABELS[conf.lang], name: $scope.riName });
@@ -1492,7 +1492,7 @@ locale[defaultLocale] = {
 						return false;
 					}
 				}
-				
+
 				if (!$scope.ri.rangetype) {
 					$scope.ri.messageAreaText = conf.i18n.noEndRecurrence;
 					return false;
@@ -1509,6 +1509,8 @@ locale[defaultLocale] = {
 					// check checkbox
 					$scope.ri.enabled = true;
 					recurrenceOn();
+          console.log("test");
+          $scope.ngChange();
 				}
 
                 $scope.ri.saved = true;
@@ -1550,7 +1552,7 @@ locale[defaultLocale] = {
 				$scope.ri.$modalInstance = $modalInstance;
 				$scope.name = directiveScope.name;
 			}
-			
+
 			$scope.ri.showForm = function () {
 				if ($scope.ri.enabled) {
 					$scope.modal = $modal.open({
@@ -1611,7 +1613,7 @@ locale[defaultLocale] = {
 
 			$scope.$watch('xrrule', updateInternals);
 		}
-			
+
         return {
             restrict: 'E',
             template: riTemplate["ridisplay.html"],
@@ -1622,24 +1624,20 @@ locale[defaultLocale] = {
                 EXDATES: '=riExdates',
                 RDATES: '=riRdates',
                 riLocale: '=',
-                riStartDate: '='
+                riStartDate: '=',
+                ngChange: '&'
             },
-            link: function (scope, elem, attr, ctrl) {
-                /* elem.bind('click', function(e) {
-                     e.stopPropagation();
-                 });
-                 $document.bind('click', function() {
-                     scope.$apply(attr.kdAntiClick);
-                 });*/
+            link: function(scope, element, attrs, ngModel) {
             },
             controller: controller
         };
     };
-	
+
 	if(typeof define === "function" && define.amd) {
         define("riDirective", function (require, exports, module) {
             return riDirective;
         });
 	} else {
 		window.riDirective = riDirective;
-	}})(window, document);
+	}
+})(window, document);
